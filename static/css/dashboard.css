@@ -1,0 +1,162 @@
+/* DASHBOARD */
+.main, .aside {
+  padding: 1rem;
+}
+.aside {
+  background-color: #0e0e2c;
+  color: #fff;
+  border-radius: 10px;
+  height: 125vh;
+}
+.navbar, .scrollspy {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+.scrollspy {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* PERFORMANCE ITEM */
+.performance-item {
+  background-color: #2d2d5b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.performance-item:hover {
+  transform: translateY(-4px);
+}
+
+/* TITOLI GIORNI */
+.scrollspy h4 {
+  border-bottom: 1px solid #ff7a00;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  color: #ff7a00;
+}
+
+nav a.nav-link:hover {
+  color: #ffc107;
+}
+.nav-pills .nav-link.active {
+  background-color: #ffc107;
+  color: #212529;
+  font-weight: bold;
+}
+
+/* BOTTONI */
+main .btn-dashboard {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+}
+main .btn-outline-dashboard {
+  background-color: transparent;
+  color: #ff7a00;
+  border: 1px solid #ff7a00;
+}
+main .btn-outline:hover {
+  background-color: #ff7a00;
+  color: #000;
+}
+.btn-pubblica {
+  background: linear-gradient(135deg, #38ef7d, #11998e);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-pubblica:hover {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(17, 153, 142, 0.3);
+}
+.btn-elimina {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-elimina:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 75, 43, 0.3);
+}
+.btn-modifica {
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+  color: #333;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-modifica:hover {
+  background: linear-gradient(135deg, #f8b500, #fceabb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(248, 181, 0, 0.3);
+}
+
+/* MODAL */
+#modal-content {
+  background-color: #1a1a3c;
+  color: #fff;
+}
+#homeModalLabel {
+  color: #ff7a00;
+}
+
+/* CHECKBOX STILIZZATI */
+input[type="checkbox"] {
+  accent-color: #ff7a00;
+}
+
+/* SEZIONI */
+section {
+  margin-bottom: 2rem;
+}
+
+/* ADD PERFORMANCE */
+#newPerformance {
+  background-color: rgba(10, 10, 30, 0.6);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 89, 255, 0.3);
+}
+#newPerformance label {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+#newPerformance input,
+#newPerformance textarea,
+#newPerformance select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  color: #cccccc;
+}
+#newPerformance input:focus,
+#newPerformance textarea:focus,
+#newPerformance select:focus {
+  outline: none;
+  border-color: #ff7a00;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+#newPerformance input::placeholder,
+#newPerformance textarea::placeholder {
+  color: #cccccc;
+}
+#newPerformance select option {
+  color: black;
+}

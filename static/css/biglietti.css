@@ -1,0 +1,21 @@
+/* BIGLIETTI */
+label {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+#day, #days {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  color: #cccccc;
+}
+#days:focus,
+#day:focus {
+  outline: none;
+  border-color: #ff7a00;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+#day option,
+#days option {
+  color: black;
+}

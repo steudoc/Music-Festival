@@ -1,0 +1,41 @@
+/* PROFILO */
+.profile-ticket {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 12px;
+}
+.ticket-card {
+  background: #fff8e1; /* carta leggermente beige */
+  border: 2px dashed #f39c12; /* bordo tratteggiato arancio */
+  border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  font-family: 'Georgia', serif;
+  color: #5d4037; /* marrone scuro */
+  overflow: hidden;
+}
+/* titolo biglietto */
+.ticket-card h5 {
+  color: #e67e22; /* arancio scuro */
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+/* dettagli biglietto */
+.ticket-detail p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.ticket-detail strong {
+  font-weight: 600;
+  color: #a0522d; /* marrone */
+}
+.ticket-icon {
+  font-size: 1.2rem;
+  color: #ff7a00;
+  margin-right: 8px;
+}

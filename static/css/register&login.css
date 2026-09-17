@@ -1,0 +1,119 @@
+/* LOGIN MODAL */
+#modal-content {
+  background: rgba(10, 10, 30, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(31, 28, 255, 0.2);
+  padding: 1rem;
+}
+#loginModal label {
+  color: #ff7a00;
+  font-weight: bold;
+}
+#loginModal input {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+#loginModal input:focus {
+  border-color: #ff7a00;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 0.1rem #ff7a00;
+  outline: none;
+  color: #fff;
+}
+#loginModal input::placeholder {
+  color: #cccccc;
+}
+#loginModal .modal-footer .btn-outline {
+  background-color: transparent;
+  color: #ff7a00;
+  border: 1px solid #ff7a00;
+  transition: 0.3s;
+}
+#loginModal .modal-footer .btn-outline:hover {
+  background-color: #ff7a00;
+  color: #000;
+}
+#loginModal .modal-footer .btn {
+  background-color: #ff7a00;
+  color: #000;
+  transition: 0.3s;
+}
+#loginModal .modal-footer .btn:hover {
+  background-color: #ffa94d;
+}
+#loginModal a {
+  color: #ffb366;
+  text-decoration: underline;
+}
+#loginModal a:hover {
+  color: #ffd6a0;
+}
+
+/* REGISTRAZIONE */
+#form-signup {
+  background: rgba(10, 10, 30, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 30px rgba(31, 28, 255, 0.2);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+#form-signup label {
+  color: #ff7a00;
+  font-weight: bold;
+}
+#form-signup input,
+#form-signup select {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+}
+#form-signup input:focus,
+#form-signup select:focus {
+  border-color: #ff7a00;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-shadow: 0 0 0 0.1rem #ff7a00;
+  outline: none;
+}
+#form-signup input::placeholder {
+  color: #cccccc;
+}
+#form-signup .btn-outline {
+  background-color: transparent;
+  color: #ff7a00;
+  border: 1px solid #ff7a00;
+  transition: all 0.3s ease;
+}
+#form-signup .btn-outline:hover {
+  background-color: #ff7a00;
+  color: #000;
+}
+#form-signup .btn {
+  background-color: #ff7a00;
+  color: #000;
+  border: none;
+  transition: all 0.3s ease;
+}
+#form-signup .btn:hover {
+  background-color: #ffa94d;
+  color: #000;
+}
+#form-signup a {
+  color: #ffc68c;
+  text-decoration: underline;
+}
+#form-signup a:hover {
+  color: #ffe2bb;
+}

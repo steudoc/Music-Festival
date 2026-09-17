@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Modifica bozza{% endblock %}
+
+{% block content %}
+    <div class="col-12 mt-5">
+        <h1 class="text-center">Modifica Bozza di Performance</h1>
+        <p class="text-center">Aggiorna le informazioni della performance e salva le modifiche.</p>
+    </div>
+
+    <div class="row p-4 justify-content-around">
+        <!-- Aside: Scrollspy Giorni -->
+        <aside class="aside col-11 col-md-4 col-lg-3">
+            <nav id="navbar-example2" class="navbar px-3 mb-3 rounded-2">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="#scrollspyHeading1">Venerdì</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading2">Sabato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading3">Domenica</a></li>
+                </ul>
+            </nav>
+            <div class="scrollspy p-3 rounded-2" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+                {% for giorno in ['Venerdì', 'Sabato', 'Domenica'] %}
+                    <h4 id="scrollspyHeading{{ loop.index }}">{{ giorno }}</h4>
+                    {% for performance in p_performances %}
+                        {% if performance.giorno == giorno %}
+                            <div class="performance-item mb-3">
+                                <h5 class="text-light-orange">{{ performance.artista }}</h5>
+                                <p><strong>Ora inizio:</strong> {{ performance.ora }}</p>
+                                <p><strong>Ora fine:</strong> {{ performance.ora_fine }}</p>
+                                <p><strong>Palco:</strong> {{ performance.nome_palco }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div> 
+        </aside>
+
+        <main class="main col-11 col-md-8">
+            <div class="card card-body rounded-3 m-0" id="newPerformance">
+                <form id="performanceForm" action="/draft/modify" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{ p_bozza.id }}">
+                    
+                    <!--Artista-->
+                    <div class="mb-3">
+                        <label for="artista" class="form-label">Artista</label>
+                        <input type="text" class="form-control" id="artista" name="artista" value="{{ p_bozza.artista }}" required>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <!--Giorno-->
+                        <div class="col-md-4">
+                            <label for="giorno" class="form-label">Giorno</label>
+                            <select class="form-select" id="giorno" name="giorno" required>
+                                <option value="{{ p_bozza.giorno }}" selected>{{ p_bozza.giorno }}</option>
+                                {% if p_bozza.giorno != 'Venerdì' %}
+                                    <option value="Venerdì">Venerdì</option>
+                                {% endif %}
+                                {% if p_bozza.giorno != 'Sabato' %}
+                                    <option value="Sabato">Sabato</option>
+                                {% endif %}
+                                {% if p_bozza.giorno != 'Domenica' %}
+                                    <option value="Domenica">Domenica</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <!--Ora-->
+                        <div class="col-md-4">
+                            <label for="ora" class="form-label">Orario</label>
+                            <input type="time" class="form-control" id="ora" name="ora" value="{{ p_bozza.ora }}" required>
+                        </div>
+                        <!--Durata-->
+                        <div class="col-md-4">
+                            <label for="durata" class="form-label">Durata (in minuti)</label>
+                            <input type="number" class="form-control" id="durata" name="durata" value="{{ p_bozza.durata }}" required>
+                        </div>
+                    </div>
+
+                    <!--Descrizione-->
+                    <div class="mb-3">
+                        <label for="descrizione" class="form-label">Descrizione</label>
+                        <textarea class="form-control" id="descrizione" name="descrizione" rows="4" required>{{ p_bozza.descrizione }}</textarea>
+                    </div>
+
+                    <!--Palco-->
+                    <div class="mb-3">
+                        <label for="palco" class="form-label">Palco</label>
+                        <select class="form-select" id="palco" name="palco" required>
+                            {% for stage in p_stages %}
+                                <option value="{{ stage.id }}" {% if stage.id == p_bozza.palco %}selected{%endif%} >{{ stage.nome_palco }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text">Se il palco desiderato non è presente, aggiungilo tu in <a href="/stages">stages</a></small>
+                    </div>
+
+                    <!--Genere-->
+                    <div class="mb-3">
+                        <label for="genere" class="form-label">Genere musicale</label>
+                        <input type="text" class="form-control" id="genere" name="genere" value="{{ p_bozza.genere }}" required>
+                    </div>
+
+                    <!--Immagini-->
+                    <div class="mb-3 d-flex flex-wrap justify-content-between align-items-center">
+                        <button type="button" class="btn btn-azzurro col-lg-2" data-bs-toggle="modal" data-bs-target="#imm1Modal" data-bs-whatever="@mdo">Visualizza immagini</button>
+                        <div class="col-lg-9">
+                            <label for="immagine1" class="form-label">Nuova immagine promozionale</label>
+                            <input type="file" class="form-control mb-3" id="immagine1" name="immagine1" accept="image/*">
+
+                            <label for="immagine2" class="form-label">Nuova immagine 2 (opzionale)</label>
+                            <input type="file" class="form-control mb-3" id="immagine2" name="immagine2" accept="image/*">
+
+                            <label for="immagine3" class="form-label">Nuova immagine 3 (opzionale)</label>
+                            <input type="file" class="form-control mb-3" id="immagine3" name="immagine3" accept="image/*">
+                        </div>
+                    </div>
+
+                    <!--Modifica homepage-->
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="homepage" name="homepage" {% if p_bozza.homepage %}checked{% endif %}>
+                        <label class="form-check-label" for="homepage">Aggiungi alla homepage</label>
+                    </div>
+
+                    <div class="d-flex flex-wrap">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline me-2 mt-2">Torna al dashboard</a>
+                        <button type="submit" class="btn btn-primary me-2 mt-2" name="azione" value="bozza">Salva come bozza</button>
+                        <button type="submit" class="btn btn-primary mt-2" name="azione" value="pubblica">Pubblica</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL IMMAGINI -->
+    <div class="modal fade" id="imm1Modal" tabindex="-1" aria-labelledby="immModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="loginModalLabel">Immagini bozza</h1>
+                    <button type="button" class="btn-close color-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div id="carouselIndicators" class="carousel slide">
+                        <div class="carousel-indicators">
+                            {% set immagini = [p_bozza.immagine1] %}
+                            {% if p_bozza.immagine2 %}{% set _ = immagini.append(p_bozza.immagine2) %}{% endif %}
+                            {% if p_bozza.immagine3 %}{% set _ = immagini.append(p_bozza.immagine3) %}{% endif %}
+                            {% for i in range(immagini|length) %}
+                                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}" {% if i == 0 %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ i + 1 }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ url_for('static', filename=p_bozza.immagine1) }}" class="d-block w-100 rounded-top" alt="Immagine 1">
+                            </div>
+                            {% if p_bozza.immagine2 %}
+                                <div class="carousel-item">
+                                    <img src="{{ url_for('static', filename=p_bozza.immagine2) }}" class="d-block w-100" alt="Immagine 2">
+                                </div>
+                            {% endif %}
+                            {% if p_bozza.immagine3 %}
+                                <div class="carousel-item">
+                                    <img src="{{ url_for('static', filename=p_bozza.immagine3) }}" class="d-block w-100" alt="Immagine 3">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Precedente</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Successivo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+{% endblock %}

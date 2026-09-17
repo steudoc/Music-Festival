@@ -1,0 +1,35 @@
+/* ADD STAGE */
+#newStage {
+  background-color: rgba(10, 10, 30, 0.6);
+  padding: 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 89, 255, 0.3);
+}
+#newStage label {
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+#newStage input,
+#newStage textarea,
+#newStage select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  color: #cccccc;
+}
+#newStage input:focus,
+#newStage textarea:focus,
+#newStage select:focus {
+  outline: none;
+  border-color: #ff7a00;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+#newStage input::placeholder,
+#newStage textarea::placeholder {
+  color: #cccccc;
+}
+#newStage select option {
+  color: black;
+}

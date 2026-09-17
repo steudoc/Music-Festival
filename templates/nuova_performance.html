@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Nuova Performance{% endblock %}
+
+{% block content %}
+    <div class="col-12 my-5">
+        <h1 class="text-center">Crea una Nuova Performance</h1>
+        <p class="text-center">Inserisci tutte le informazioni necessarie e aggiungi una nuova performance al festival!</p>
+    </div>
+
+    <div class="row p-4 justify-content-around">
+        <!-- Aside: Scrollspy Giorni -->
+        <aside class="aside col-11 col-md-4 col-lg-3">
+            <nav id="navbar-example2" class="navbar px-3 mb-3 rounded-2">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="#scrollspyHeading1">Venerdì</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading2">Sabato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading3">Domenica</a></li>
+                </ul>
+            </nav>
+            <div class="scrollspy p-3 rounded-2" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+                {% for giorno in ['Venerdì', 'Sabato', 'Domenica'] %}
+                    <h4 id="scrollspyHeading{{ loop.index }}">{{ giorno }}</h4>
+                    {% for performance in p_performances %}
+                        {% if performance.giorno == giorno %}
+                            <div class="performance-item mb-3">
+                                <h5 class="text-light-orange">{{ performance.artista }}</h5>
+                                <p><strong>Ora inizio:</strong> {{ performance.ora }}</p>
+                                <p><strong>Ora fine:</strong> {{ performance.ora_fine }}</p>
+                                <p><strong>Palco:</strong> {{ performance.nome_palco }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div> 
+        </aside>
+
+        <!-- Main Content: Form creazione performance -->
+        <main class="main col-11 col-md-8">
+            <div class="card card-body rounded-3 m-0" id="newPerformance">
+                <form id="performanceForm" action="/dashboard/performance/create" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="artista" class="form-label">Artista</label>
+                        <input type="text" class="form-control" id="artista" name="artista" value="{{ form_data.artista if form_data is defined else '' }}" placeholder="Inserisci l'artista o il gruppo" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="giorno" class="form-label">Giorno</label>
+                        <select class="form-select" id="giorno" name="giorno" required>
+                            <option value="" {% if form_data is not defined %}selected{%endif%} disabled>Seleziona un giorno</option>
+                            <option value="Venerdì" {% if form_data is defined and form_data.giorno == 'Venerdì'%}selected{%endif%}>Venerdì</option>
+                            <option value="Sabato" {% if form_data is defined and form_data.giorno == 'Sabato'%}selected{%endif%}>Sabato</option>
+                            <option value="Domenica" {% if form_data is defined and form_data.giorno == 'Domenica'%}selected{%endif%}>Domenica</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ora" class="form-label">Orario</label>
+                        <input type="time" class="form-control" id="ora" name="ora" value="{{ form_data.ora if form_data is defined else '' }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="durata" class="form-label">Durata (in minuti)</label>
+                        <input type="number" class="form-control" id="durata" name="durata" value="{{ form_data.durata if form_data is defined else '' }}" placeholder="Durata della performance in minuti" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descrizione" class="form-label">Descrizione</label>
+                        <textarea class="form-control" id="descrizione" name="descrizione" rows="3" placeholder="Descrizione della performance" required>{{ form_data.descrizione if form_data is defined }}</textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="palco" class="form-label">Palco</label>
+                        <select class="form-select" id="palco" name="palco" required>
+                            <option value="" {% if form_data is not defined %}selected{%endif%} disabled>Seleziona un palco</option>
+                            {% for stage in p_stages %}
+                                <option value="{{ stage.id }}" {% if form_data is defined and form_data.palco == stage.id %}selected{%endif%}>{{ stage.nome_palco }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="form-text">Se il palco desiderato non è presente, aggiungilo tu in <a href="/stages">stages</a></small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="genere" class="form-label">Genere musicale</label>
+                        <input type="text" class="form-control" id="genere" name="genere" value="{{ form_data.genere if form_data is defined else '' }}" placeholder="Es. Indie Pop, Rap, Rock..." required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="immagine1" class="form-label">Immagine promozionale</label>
+                        <input type="file" class="form-control" id="immagine1" name="immagine1" accept="image/*" required>
+                        <small class="form-text text-warning">Nota: dovrai ricaricare le immagini se ci sono errori nel form.</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="immagine2" class="form-label">Immagine 2 (opzionale)</label>
+                        <input type="file" class="form-control" id="immagine2" name="immagine2" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="immagine3" class="form-label">Immagine 3 (opzionale)</label>
+                        <input type="file" class="form-control" id="immagine3" name="immagine3" accept="image/*">
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="homepage" name="homepage" {% if form_data is defined and form_data.homepage == 1 %}checked{%endif%}>
+                        <label class="form-check-label" for="homepage">Aggiungi alla homepage</label>
+                    </div>
+
+                    <div class="d-flex flex-wrap">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline me-2 mt-2">Torna al dashboard</a>
+                        <button type="reset" class="btn btn-outline me-2 mt-2" name="reset" value="reset">Cancella</button>
+                        <button type="submit" class="btn btn-primary me-2 mt-2" name="bozza" value="bozza">Salva come bozza</button>
+                        <button type="submit" class="btn btn-primary mt-2" name="pubblica" value="pubblica">Pubblica</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+{% endblock %}

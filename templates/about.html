@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}About us{% endblock %}
+
+
+
+{% block content %}
+<section class="pt-5 text-white m-0">
+  <div class="page-title container text-center">
+    <img src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Logo" class="mb-3" width="50" height="50">
+    <h1>Chi siamo</h1>
+    <h2>Un festival. Tre giorni. Infinite emozioni.</h2>
+  </div>
+</section>
+
+<section class="container p-5">
+  <div class="row g-4">
+
+    <!-- Obiettivo -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🎯 Il nostro obiettivo</h5>
+          <p class="card-text">Creare un evento in cui la musica diventi <strong>incontro</strong>, <strong>scoperta</strong> e <strong>partecipazione attiva</strong>. Ogni edizione è pensata per offrire un'esperienza autentica, inclusiva e sostenibile.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visione -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">👁️ La nostra visione</h5>
+          <p class="card-text">Un festival come <strong>motore di cultura</strong> e <strong>comunità</strong>, in grado di trasformare luoghi ordinari in palcoscenici straordinari.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🧑‍🤝‍🧑 Il team</h5>
+          <p class="card-text">Un gruppo giovane e affiatato di organizzatori, volontari e tecnici. Ogni palco, ogni luce, ogni nota è frutto di passione e lavoro condiviso.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Storia -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📜 La nostra storia</h5>
+          <p class="card-text">Tutto è iniziato tra amici. Ora siamo una realtà culturale che coinvolge centinaia di persone e cresce ad ogni edizione.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dove siamo -->
+    <div class="col-12">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📍 Dove siamo?</h5>
+          <p class="card-text">
+            Il festival si svolge a <strong>Manta</strong>, in provincia di Cuneo. Un luogo immerso nella natura, perfetto per vivere tre giorni di musica, arte e convivialità in un’atmosfera unica.
+          </p>
+          <a href="https://maps.google.com/?q=Manta,+Cuneo" target="_blank" class="btn btn-outline-primary mt-2">Apri su Google Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cosa troverai -->
+    <div class="col-12">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">💡 Cosa troverai</h5>
+          <ul class="list-group list-group-flush rounded-3">
+            <li class="list-group-item color-azzurro">🎵 Concerti, dj set e performance artistiche</li>
+            <li class="list-group-item color-azzurro">🌳 Palchi in luoghi naturali o urbani suggestivi</li>
+            <li class="list-group-item color-azzurro">🍔 Area food & relax, attività per tutte le età</li>
+            <li class="list-group-item color-azzurro">✨ Un’atmosfera magica che non dimenticherai</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sostenibilità -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">🌿 Sostenibilità</h5>
+                <p class="card-text">Usiamo materiali riciclabili, promuoviamo mobilità green e collaboriamo con realtà locali per un impatto minimo sull’ambiente.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collabora -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🤝 Collabora con noi</h5>
+          <p class="card-text">Cerchiamo <strong>artisti, sponsor e volontari</strong> per crescere insieme. Scrivici a <a href="#">collab@aetherialnights.com</a> o seguici sui nostri canali social!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

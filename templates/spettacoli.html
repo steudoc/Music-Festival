@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Spettacoli{% endblock %}
+
+{% block content %}
+    <!-- Titolo principale -->
+    <div class="row">
+        <section class="page-title text-center my-5">
+            <h1>Spettacoli</h1>
+            <h2>Trova la performance più adatta a te!</2>
+        </section>
+    </div>
+
+    <!-- Form di ricerca -->
+    <form method="POST" action="{{ url_for('filtro_spettacoli') }}" class="row g-3 mb-5 px-4 col-10 shadow" id="filter">
+        <div class="col-md-3">
+            <label for="giorno" class="form-label text-white">Giorno</label>
+            <select class="form-select" id="giorno" name="giorno">
+            <option value="">Tutti</option>
+            <option value="Venerdì" {%if p_filtro.giorno=='Venerdì'%}selected{%endif%}>Venerdì</option>
+            <option value="Sabato" {%if p_filtro.giorno=='Sabato'%}selected{%endif%}>Sabato</option>
+            <option value="Domenica" {%if p_filtro.giorno=='Domenica'%}selected{%endif%}>Domenica</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="palco" class="form-label text-white">Palco</label>
+            <select class="form-select" id="palco" name="palco">
+            <option value="">Tutti</option>
+            {% for palco in p_palchi %}
+                <option value="{{ palco.id }}" {% if p_filtro.palco|string == palco.id|string %}selected{% endif %}>{{ palco.nome_palco }}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="genere" class="form-label text-white">Genere musicale</label>
+            {% if p_filtro.genere %}
+                <input type="text" class="form-control" id="genere" name="genere" value="{{p_filtro.genere}}">
+            {% else %}
+                <input type="text" class="form-control" id="genere" name="genere" placeholder="Cerca genere musicale">
+            {%endif%}
+        </div>
+        <div class="col-md-2 d-flex flex-column justify-content-around">
+            <button type="submit" class="btn btn-orange btn-sm mb-2">🔍 Filtra</button>
+            <a href="{{ url_for('spettacoli') }}" class="btn btn-outline btn-sm">Azzera filtri</a>
+            <!--<button type="submit" class="btn btn-outline btn-sm">Azzera filtri</button>-->
+        </div>
+    </form>
+
+    <!-- Performance -->
+    <div class="col-12 p-4 d-flex justify-content-center">
+        {% if p_spettacoli %}
+            <div class="row justify-content-around">
+                {% for spettacolo in p_spettacoli %}
+                    <div class="col-10 col-md-4 mb-4">
+                        <a href="{{ url_for('single_performance', id=spettacolo.id) }}" class="text-decoration-none">
+                            <div class="card h-100 shadow-sm border-0 hover-shadow">
+                                <!-- Carousel immagini performance -->
+                                <div id="carousel{{ spettacolo.id }}Indicators" class="carousel slide">
+                                    <div class="carousel-indicators">
+                                        {% set immagini = [spettacolo.immagine1] %}
+                                        {% if spettacolo.immagine2 %}{% set _ = immagini.append(spettacolo.immagine2) %}{% endif %}
+                                        {% if spettacolo.immagine3 %}{% set _ = immagini.append(spettacolo.immagine3) %}{% endif %}
+                                        {% for i in range(immagini|length) %}
+                                            <button type="button" data-bs-target="#carousel{{ spettacolo.id }}Indicators" data-bs-slide-to="{{ i }}" {% if i == 0 %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ i + 1 }}"></button>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{ url_for('static', filename=spettacolo.immagine1) }}" class="d-block w-100 rounded-top" alt="Immagine 1">
+                                        </div>
+                                        {% if spettacolo.immagine2 %}
+                                            <div class="carousel-item">
+                                                <img src="{{ url_for('static', filename=spettacolo.immagine2) }}" class="d-block w-100" alt="Immagine 2">
+                                            </div>
+                                        {% endif %}
+                                        {% if spettacolo.immagine3 %}
+                                            <div class="carousel-item">
+                                                <img src="{{ url_for('static', filename=spettacolo.immagine3) }}" class="d-block w-100" alt="Immagine 3">
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ spettacolo.id }}Indicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                        <span class="visually-hidden">Precedente</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ spettacolo.id }}Indicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                        <span class="visually-hidden">Successivo</span>
+                                    </button>
+                                </div>
+                                <!-- Breve didascalia -->
+                                <div class="card-body">
+                                    <h3 class="card-title fw-bold text-orange">{{ spettacolo.artista }}</h3>
+                                    <p class="card-text mb-1 text-white">
+                                        📅 <strong></strong> {{ spettacolo.giorno }}
+                                    </p>
+                                    <p class="card-text mb-1 text-white">
+                                        🕒 <strong></strong> Ore {{ spettacolo.ora }}
+                                    </p>
+                                    <p class="card-text mb-3 text-white">
+                                        🏟️ <strong></strong> {{ spettacolo.nome_palco }}
+                                    </p>
+                                    <a href="{{ url_for('single_performance', id=spettacolo.id) }}" class="btn btn-outline me-1">Dettagli</a>
+                                    {% if current_user.is_authenticated and current_user.organizzatore == 0 %}
+                                        <a href="/biglietti" class="btn">Acquista biglietti</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-ticket alert-warning col-10" role="alert">
+                Nessuno spettacolo trovato.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

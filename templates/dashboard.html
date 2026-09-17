@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <!-- Intestazione -->
+    <section class="text-center col-10 my-5">
+        <h1 class="fw-bold">Benvenuto nella Dashboard per organizzatori</h1>
+        <p class="text-light">Qui puoi gestire le tue bozze e visualizzare le performance già pubblicate.</p>
+    </section>
+
+    <div class="row p-4 justify-content-around">
+        <!-- Aside: Scrollspy Giorni -->
+        <aside class="aside col-12 col-md-3 mb-4 mb-md-0">
+            <nav id="navbar-example2" class="navbar px-3 mb-3 rounded-2">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="#scrollspyHeading1">Venerdì</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading2">Sabato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#scrollspyHeading3">Domenica</a></li>
+                </ul>
+            </nav>
+            <div class="scrollspy p-3 rounded-2" data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+                {% for giorno in ['Venerdì', 'Sabato', 'Domenica'] %}
+                    <h4 id="scrollspyHeading{{ loop.index }}">{{ giorno }}</h4>
+                    {% for performance in p_performances %}
+                        {% if performance.giorno == giorno %}
+                            <div class="performance-item mb-3">
+                                <h5 class="text-light-orange">{{ performance.artista }}</h5>
+                                <p><strong>Orario:</strong> {{ performance.ora }}</p>
+                                <p><strong>Durata:</strong> {{ performance.durata }} minuti</p>
+                                <p><strong>Palco:</strong> {{ performance.nome_palco }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div> 
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main col-12 col-md-8">
+            <!-- Sezione Gestione Homepage -->
+            <section class="mb-5">
+                <h2>Gestisci homepage</h2>
+                <p>Aggiungi o rimuovi performance dalla homepage</p>
+                <button type="button" class="btn btn-dashboard me-2" data-bs-toggle="modal" data-bs-target="#homeModal">
+                    Modifica homepage
+                </button>
+            </section>
+            
+            <!-- Sezione Bozze -->
+            <section class="mb-5">
+                 <h2>Le tue bozze</h2>
+                <p>Qui puoi visualizzare e gestire le bozze delle tue performance.</p>
+                <button class="btn btn-dashboard mb-3" onclick="location.href='dashboard/nuova_performance'">
+                    Crea nuova performance
+                </button>
+
+                {% for draft in p_draft %}
+                    <div class="performance-item mb-3 d-flex flex-wrap justify-content-between align-items-center">
+                        <article class="performance-details col-12 col-md-10">
+                            <h5 class="text-light-orange">{{ draft.artista }}</h5>
+                            <p><strong>Giorno:</strong> {{ draft.giorno }}</p>
+                            <p><strong>Orario:</strong> {{ draft.ora }}</p>
+                            <p><strong>Durata:</strong> {{ draft.durata }} minuti</p>
+                            <p><strong>Palco:</strong> {{ draft.nome_palco }}</p>
+                        </article>
+                        <div class="col-12 col-md-2 d-flex flex-wrap align-items-center justify-content-end gap-1">
+                            {% if draft.can_publish %}
+                                <a href="{{ url_for('publish_draft', id=draft.id) }}" class="btn btn-pubblica col-lg-9">Pubblica</a>
+                            {% else %}
+                                <button class="btn btn-pubblica d-flex justify-content-center col-lg-9" disabled>Non pubblicabile</button>
+                            {% endif %}
+                            <a href="{{ url_for('modifica_bozza', id=draft.id) }}" class="btn btn-modifica col-lg-9">Modifica</a>
+                            <a href="{{ url_for('delete_draft', id=draft.id) }}" class="btn btn-elimina col-lg-9">Elimina</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+
+            <!-- Sezione Performance Pubblicate -->
+            <section>
+                <h2>Le tue performance</h2>
+                <p>Qui puoi visualizzare le performance che hai già pubblicato.</p>
+                {% for performance in p_my_performances %}
+                    <div class="performance-item mb-3">
+                        <h5 class="text-light-orange">{{ performance.artista }}</h5>
+                        <p><strong>Giorno:</strong> {{ performance.giorno }}</p>
+                        <p><strong>Orario:</strong> {{ performance.ora }}</p>
+                        <p><strong>Palco:</strong> {{ performance.nome_palco }}</p>
+                    </div>
+                {% endfor %}
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Homepage -->
+    <div class="modal fade" id="homeModal" tabindex="-1" aria-labelledby="homeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <h1 class="modal-title fs-5" id="homeModalLabel">Modifica Homepage</h1>
+                        <p class="text-muted small">Seleziona le performance da mostrare nella homepage</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="modify_home" action="/modify_home" method="POST">
+                        {% for performance in p_performances %}
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" id="performance-{{ performance.id }}" name="performance_ids" value="{{ performance.id }}" {% if performance.homepage %}checked{% endif %}>
+                                <label class="form-check-label text-white" for="performance-{{ performance.id }}">{{ performance.artista }}</label>
+                            </div>
+                        {% endfor %}
+                        <div class="modal-footer">
+                            <button type="reset" class="btn-outline" data-bs-dismiss="modal">Annulla</button>
+                            <button type="submit" class="btn btn-warning">Salva</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+<div class="video-background px-0 col-12">
+    <video autoplay muted loop playsinline>
+        <source src="{{ url_for('static', filename='videos/video_home.mp4')}}" type="video/mp4" />
+        Il tuo browser non supporta il video di sfondo.
+    </video>
+    <div class="content-over-video home-video-content d-flex justify-content-center align-items-center">
+        <div class="welcome col-lg-6 text-center my-5 p-3 rounded-5">
+            <h1>Aetherial Nights</h1>
+            <h2 class="text-light-orange">Music. Magic. Midnight.</h2>
+            <h2>8-9-10 agosto 2025, Manta</h2>
+        </div>
+    </div>
+</div>
+<div class="home_post col-12 d-flex justify-content-around flex-wrap p-3">
+    <h3 class="col-12 text-center mt-4 mb-5">Scopri gli spettacoli, gli artisti e le location del nostro festival!</h3>
+    {% for spettacolo in p_spettacoli %}
+        <div class="col-11 col-md-3 mb-4 d-flex flex-wrap p-3">
+            <a href="{{ url_for('single_performance', id=spettacolo.id) }}" class="text-decoration-none">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename=spettacolo.immagine1) }}" class="card-img-top" alt="{{ spettacolo.artista }}">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ spettacolo.artista }}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+<a href="{{ url_for('spettacoli') }}" class="btn col-5 col-md-3 mt-4">
+    Vai al programma completo
+</a>
+{% endblock %}
+

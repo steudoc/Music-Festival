@@ -1,0 +1,190 @@
+/* ALERT */
+.alert {
+  position: fixed;
+  z-index: 1050;
+} 
+.alert-ticket {
+  position: relative;
+}
+.alert a:hover {
+  color: #ff6600
+}
+
+/* BODY */
+body {
+  /*background: linear-gradient(180deg, #1f1cff, #0059ff,#3b0aaf);*/
+  background-image: url('/static/images/stelle.jpeg');
+  background-attachment: fixed;
+  background-size: cover;
+  color: white;
+  overflow-x: hidden;
+  /*font-family: 'Inter', sans-serif;*/
+}
+a {
+  color: #ff6600;
+}
+a:hover {
+  color: #fffde7;
+}
+
+/* HEADER E FOOTER */
+header, footer {
+  background: rgba(10, 10, 30, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ff7a00; 
+  box-shadow: 0 0 12px rgba(31, 28, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+a.nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+header a.nav-link:hover {
+  color: #ff7a00;
+}
+header .nav-link.nav-current {
+  color: #ff7a00;
+  border-bottom: 2px solid #ff7a00;
+  font-weight: 600;
+  background-color: transparent;
+}
+
+
+.container-fluid {
+    flex: 1 0 auto;
+    min-height: 77vh;
+}
+
+/* BUTTON */
+.btn {
+  background: linear-gradient(45deg, #ff6600, #ff9900);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff8533, #ffaa33);
+  color: #fff;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #ff5e00;
+  color: #ff5e00;
+  font-weight: 600;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+.btn-outline:hover {
+  background: #ff5e00;
+  color: white;
+  border-color: #ff5e00;
+}
+
+.btn-azzurro {
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-azzurro:hover {
+  background: linear-gradient(145deg, #0072ff, #00c6ff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 114, 255, 0.3);
+}
+
+.text-orange {
+    color: #ff6600;
+}
+.text-light-orange{
+  color: #ffaa33;
+}
+.color-orange {
+    background-color: #ff6600;
+    border-color: #ff6600;
+}
+.color-azzurro {
+  background: linear-gradient(145deg, #0072ff, #00c6ff);
+  color: white;
+  transition: all 0.3s ease;
+}
+.color-white {
+  background-color: white;
+  border-color: white;
+  color: white
+}
+.page-title {
+  font-family: "Genos", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 900;
+}
+.page-title h1 {
+  font-size: 5rem;
+}
+.title {
+  font-family: "Genos", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+/* CARD */
+.card {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: rgba(10, 10, 30, 0.6);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.card:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+.card-title {
+  color: #ff7a00;
+  font-family: "Genos", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3em;
+}
+.card-body small {
+  color: #cccccc !important; /* oppure un colore visibile come #f0f0f0 */
+}
+.card-subtitle {
+  font-style: italic;
+  color: #ffaa33;
+}
+
+
+/* DROPDOWN MENU */
+.dropdown-menu {
+  background-color: rgba(20, 20, 40, 0.95);
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.dropdown-item {
+  color: #ffffff;
+}
+.dropdown-item:hover {
+  background-color: #ff7a00;
+  color: #000;
+}
+
+

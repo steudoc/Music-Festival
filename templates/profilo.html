@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Profilo{% endblock %}
+
+{% block content %}
+<div class="col-12 p-5">
+  <div class="page-title text-center my-5">
+      <h1>Profilo</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="card profile-card">
+        <div class="card-body">
+          <h5 class="card-title">Informazioni Utente</h5>
+          <p class="card-text"><strong>Nome:</strong> {{ current_user.nome }}</p>
+          <p class="card-text"><strong>Cognome:</strong> {{ current_user.cognome }}</p>
+          <p class="card-text"><strong>Email:</strong> {{ current_user.email }}</p>
+          <p class="card-text"><strong>Data registrazione:</strong> {{ current_user.data_registrazione }}</p>
+          <p class="card-text"><strong>Tipologia account:</strong>
+            {% if current_user.organizzatore %}
+              Organizzatore
+            {% else %}
+              Partecipante
+            {% endif %}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a href="{{ url_for('logout') }}" class="btn btn-outline">Esci</a>
+          <!--<a href="/profilo/modifica" class="btn btn-primary">Modifica Profilo</a>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if current_user.organizzatore == 0 %}
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+      <div class="ticket-card">
+        <h5><i class="bi bi-ticket-fill ticket-icon"></i> Biglietto Acquistato</h5>
+        {% if p_ticket %}
+            <div class="ticket-detail">
+            {% if p_ticket.type=='daily' %}
+                <p><strong>Tipo:</strong> Pass giornaliero</p>
+                <p><strong>Giorno scelto: </strong>
+                    {% if p_ticket.Venerdì %}
+                        Venerdì
+                    {% elif p_ticket.Sabato %}
+                        Sabato
+                    {% else %}
+                        Domenica
+                    {% endif %}
+                </p>
+            {% elif p_ticket.type=='2days' %}
+                <p><strong>Tipo:</strong> Pass 2 giorni</p>
+                <p><strong>Giorni scelti: </strong>
+                    {% if p_ticket.Venerdì %}
+                        Venerdì - Sabato
+                    {% else %}
+                        Sabato - Domenica
+                    {% endif %}
+                </p>
+            {% else %}
+                <p><strong>Tipo:</strong> Full pass</p>
+            {% endif %}
+            <p><strong>Data Acquisto:</strong> {{ p_ticket.data_acquisto }}</p>
+            <p><strong>Identificativo univoco:</strong> #{{ p_ticket.id }}</p>
+            </div>
+        {% else %}
+            <p>Nessun biglietto acquistato.</p>
+        {% endif %}
+        </div>
+    </div>
+  </div>
+{% else %}
+  <div class="row mt-2">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="card profile-card">
+        <div class="card-body">
+          <h5 class="card-title">Sezione riservata agli organizzatori</h5>
+        </div>
+        <div class="card-footer">
+          <a href="{{ url_for('dashboard') }}" class="btn btn-azzurro">Vai alla dashboard</a>
+          <a href="{{ url_for('stages') }}" class="btn btn-azzurro">Gestisci palchi</a>
+          <a href="{{ url_for('biglietti') }}" class="btn btn-azzurro">Visualizza statistiche</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+</div>
+{% endblock %}

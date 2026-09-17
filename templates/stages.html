@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Stages{% endblock %}
+
+
+{% block content %}
+<div class="container-stages">
+    <!-- Titolo principale -->
+    <div class="row">
+        <section class="page-title text-center my-5">
+            <h1>Stages</h1>
+            <h2>Esplora le location del nostro festival!</2>
+        </section>
+    </div>
+    <!-- Griglia dei palchi -->
+    <div class="row px-5">
+        {% for stage in p_stages %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm rounded-4">
+                    <!-- Carousel immagini palco -->
+                    <div id="carousel{{ stage.id }}Indicators" class="carousel slide">
+                        <div class="carousel-indicators">
+                            {% for i in range(3) %}
+                            <button type="button" data-bs-target="#carousel{{ stage.id }}Indicators" data-bs-slide-to="{{ i }}" {% if i == 0 %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ i + 1 }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ url_for('static', filename=stage.immagine1) }}" class="d-block w-100 rounded-top" alt="Immagine 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ url_for('static', filename=stage.immagine2) }}" class="d-block w-100" alt="Immagine 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ url_for('static', filename=stage.immagine3) }}" class="d-block w-100" alt="Immagine 3">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ stage.id }}Indicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Precedente</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ stage.id }}Indicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Successivo</span>
+                        </button>
+                    </div>
+                    <!-- Testo -->
+                    <div class="card-body px-3 pb-3">
+                        <h3 class="card-title fw-bold text-orange">{{ stage.nome_palco }}</h3>
+                        <button class="btn-azzurro my-2" type="button" data-bs-toggle="collapse" data-bs-target="#stageDetails{{ stage.id }}" aria-expanded="false" aria-controls="stageDetails{{ stage.id }}">
+                            Mostra dettagli
+                        </button>
+                        <div class="collapse mt-2" id="stageDetails{{ stage.id }}">
+                            <p class="card-text">{{ stage.descrizione }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">📍 {{ stage.location }}</small><br>
+                                <small class="text-muted">👥 {{ stage.capienza }} posti</small><br>
+                                <small class="text-muted">🏷️ {{ stage.tipologia }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Form per aggiungere nuovo palco -->
+    {% if current_user.is_authenticated and current_user.organizzatore %}
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-warning fw-bold text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStages">
+                    ➕ Aggiungi palco
+                </button>
+            </div>
+            <div class="form-insert collapse col-10 col-md-8 mt-4" id="collapseStages">
+                <div class="card card-body" id="newStage">
+                    <form action="{{ url_for('add_stage') }}" method="POST" enctype="multipart/form-data">
+                        <!-- Nome -->
+                        <div class="mb-3">
+                            <label for="nome_palco" class="form-label">Nome palco</label>
+                            <input type="text" class="form-control" id="nome_palco" name="nome_palco" placeholder="Es. Sunset Arena" required>
+                        </div>
+                        <!-- Descrizione -->
+                        <div class="mb-3">
+                            <label for="descrizione" class="form-label">Descrizione <small>(max 300 caratteri)</small></label>
+                            <textarea class="form-control" id="descrizione" name="descrizione" rows="4" minlength="30" maxlength="300" placeholder="Inserisci una breve descrizione del palco" required></textarea>
+                        </div>
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Indirizzo</label>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="Via delle Stelle, 12 – Roma" required>
+                        </div>
+                        <!-- Capienza -->
+                        <div class="mb-3">
+                            <label for="capienza" class="form-label">Capienza</label>
+                            <input type="number" class="form-control" id="capienza" name="capienza" placeholder="Numero massimo di spettatori" required>
+                        </div>
+                        <!-- Tipologia -->
+                        <div class="mb-3">
+                            <label for="tipologia" class="form-label">Tipologia</label>
+                            <select class="form-select" id="tipologia" name="tipologia" required>
+                                <option value="" disabled selected>Seleziona la tipologia</option>
+                                <option value="Outdoor - All'aperto">🌳 Outdoor</option>
+                                <option value="Indoor - In palazzetto">🏟️ Indoor</option>
+                            </select>
+                        </div>
+                        <!-- Immagini -->
+                        <div class="mb-3">
+                            <label for="immagine1" class="form-label">Immagine 1</label>
+                            <input type="file" class="form-control" id="immagine1" name="immagine1" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="immagine2" class="form-label">Immagine 2</label>
+                            <input type="file" class="form-control" id="immagine2" name="immagine2" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="immagine3" class="form-label">Immagine 3</label>
+                            <input type="file" class="form-control" id="immagine3" name="immagine3" accept="image/*" required>
+                        </div>
+                        <!-- Pulsanti -->
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="reset" class="btn-outline me-2">Reset</button>
+                            <button type="submit" class="btn btn-success fw-bold">Aggiungi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

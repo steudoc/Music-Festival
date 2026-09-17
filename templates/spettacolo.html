@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}About us{% endblock %}
+
+
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="fw-bold text-center text-white">{{ p_spettacolo.artista }}</h1>
+    <div class="d-flex flex-wrap justify-content-center p-5">
+        <!-- Carousel immagini -->
+        <div id="carouselDettaglio{{ p_spettacolo.id }}" class="carousel col-12 col-md-6 slide mt-2">
+            <div class="carousel-indicators">
+                {% set immagini = [p_spettacolo.immagine1] %}
+                {% if p_spettacolo.immagine2 %}{% set _ = immagini.append(p_spettacolo.immagine2) %}{% endif %}
+                {% if p_spettacolo.immagine3 %}{% set _ = immagini.append(p_spettacolo.immagine3) %}{% endif %}
+                {% for i in range(immagini|length) %}
+                    <button type="button" data-bs-target="#carouselDettaglio{{ p_spettacolo.id }}" data-bs-slide-to="{{ i }}" {% if i == 0 %}class="active"{% endif %} aria-label="Slide {{ i+1 }}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner rounded">
+                {% for i in range(immagini|length) %}
+                    <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                        <img src="{{ url_for('static', filename=immagini[i]) }}" class="d-block w-100" alt="Immagine {{ i+1 }}">
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselDettaglio{{ p_spettacolo.id }}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Precedente</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselDettaglio{{ p_spettacolo.id }}" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Successivo</span>
+            </button>
+        </div>
+
+        <!-- Info spettacolo -->
+        <div class="card card-body p-4 rounded shadow col-md-6 mt-2">
+            <p class="text-white"><strong>📅 Giorno:</strong> {{ p_spettacolo.giorno }}</p>
+            <p class="text-white"><strong>🕒 Ora:</strong> {{ p_spettacolo.ora }}</p>
+            <p class="text-white"><strong>🏟️ Palco:</strong> {{ p_spettacolo.nome_palco }}</p>
+            <hr class="text-white">
+            <p class="text-white"><strong>⏳ Durata:</strong> {{ p_spettacolo.durata }} minuti</p>
+            <p class="text-white"><strong>🎭 Genere:</strong> {{ p_spettacolo.genere }}</p>
+            <hr class="text-white">
+            <h5 class="text-orange fw-bold">Descrizione</h5>
+            <p class="text-white">{{ p_spettacolo.descrizione }}</p>
+
+            {% if current_user.is_authenticated==0 or current_user.organizzatore == 0 %}
+                <a href="{{ url_for('biglietti') }}" class="btn col-lg-5 mt-3">Acquista biglietti</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class=" text-center">
+        <a href="/spettacoli" class="btn btn-outline-secondary">← Torna alla lista</a>
+    </div>
+</div>
+{% endblock %}
